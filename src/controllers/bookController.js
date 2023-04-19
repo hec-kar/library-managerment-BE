@@ -1,5 +1,4 @@
-// import pool from "../configs/connectDb";
-import Book from "../models/bookModels";
+import Book from "../models/bookModel";
 
 const getBookList = async (req, res) => {
     try {
