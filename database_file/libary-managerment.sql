@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2023 at 03:57 PM
+-- Generation Time: Apr 19, 2023 at 03:01 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -126,6 +126,14 @@ CREATE TABLE `librarian` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `librarian`
+--
+
+INSERT INTO `librarian` (`librarian_id`, `librarian_name`, `address`, `phone_number`, `username`, `password`) VALUES
+('THUTHU1', 'Ngô Tiến Phong', '44 Nguyễn Huệ', '0123456789', 'phong5141', '123456'),
+('THUTHU2', 'Ngô Bảo Mật', '4/34 đường Bảo Mật', '0123456789', 'baomat', '123123');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -167,7 +175,8 @@ ALTER TABLE `libary_card`
 -- Indexes for table `librarian`
 --
 ALTER TABLE `librarian`
-  ADD PRIMARY KEY (`librarian_id`);
+  ADD PRIMARY KEY (`librarian_id`),
+  ADD UNIQUE KEY `unique_username` (`username`);
 
 --
 -- AUTO_INCREMENT for dumped tables
