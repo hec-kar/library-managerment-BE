@@ -4,7 +4,7 @@ import express from 'express';
 const router = express.Router();
 
 const initLoginRouter = (app) => {
-    router.post('/login', loginController.loginController);
+    router.post('/login', loginController.handleLogin);
 
     return app.use('/api/v1', router);
 }

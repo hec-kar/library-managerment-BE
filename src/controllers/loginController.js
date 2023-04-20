@@ -1,8 +1,9 @@
 import Librarian from "../models/librarianModel"
 
-const loginController = async (req, res) => {
+const handleLogin = async (req, res) => {
     try {
         let { username, password } = req.body;
+        console.log(req.body)
         if (!username || !password) {
             return res.status(400).json({
                 message: 'Thiếu mật khẩu hoặc tài khoản'
@@ -35,5 +36,5 @@ const loginController = async (req, res) => {
 
 
 module.exports = {
-    loginController
+    handleLogin
 }

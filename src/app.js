@@ -1,4 +1,6 @@
 import express from "express";
+import configViewEngine from "./configs/configViewEngines";
+import initWebRouter from './routers/webRouter'
 import initBookRouter from './routers/bookRouter';
 import initGenreRouter from './routers/genreRouter';
 import initLibrarianRouter from './routers/librarianRouter';
@@ -7,17 +9,18 @@ import initLoginRouter from "./routers/loginRouter";
 const app = express();
 const port = process.env.PORT || 8080;
 
-// cấu hình midleware body-parser để lấy dữ liệu từ form đẩy lên
+// cấu hình midleware
+configViewEngine(app);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//Login Routing
+
+
+
 initLoginRouter(app);
-//Khởi tạo định tuyến (routing) cho Book
+initWebRouter(app);
 initBookRouter(app);
-//Genre routing
 initGenreRouter(app);
-//Libarian routing
 initLibrarianRouter(app);
 
 
