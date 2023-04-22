@@ -3,7 +3,7 @@ import mysql from 'mysql2/promise';
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    database: 'libary-managerment'
+    database: 'library-managerment'
     // password: '' Vì không có pass nên không cần dòng này
 })
 

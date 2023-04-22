@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2023 at 03:01 PM
+-- Generation Time: Apr 22, 2023 at 11:25 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -18,8 +18,24 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `libary-managerment`
+-- Database: `library-managerment`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_InsertNewBorrow` (IN `p_card_id` VARCHAR(10), IN `p_librarian_id` VARCHAR(10))   BEGIN
+    INSERT INTO borrows (borrow_id, card_id, librarian_id, take_date, due_date, return_date, status) 
+    VALUES (NULL, p_card_id, p_librarian_id, CURRENT_DATE(), (CURRENT_DATE() + INTERVAL 14 DAY), NULL, '0');
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_InsertNewBorrowBook` (IN `p_borrow_id` INT, IN `p_borrow_book` INT)   BEGIN
+	INSERT INTO borrow_book(borrow_id, book_id) 
+	VALUES (p_borrow_id , p_borrow_book);
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -56,9 +72,17 @@ CREATE TABLE `borrows` (
   `card_id` varchar(10) NOT NULL,
   `librarian_id` varchar(10) NOT NULL,
   `take_date` date NOT NULL,
+  `due_date` date NOT NULL,
   `return_date` date DEFAULT NULL,
-  `status` int(11) NOT NULL
+  `status` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `borrows`
+--
+
+INSERT INTO `borrows` (`borrow_id`, `card_id`, `librarian_id`, `take_date`, `due_date`, `return_date`, `status`) VALUES
+(18, '20T1020501', 'THUTHU2', '2023-04-22', '2023-05-06', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -70,6 +94,13 @@ CREATE TABLE `borrow_book` (
   `borrow_id` int(11) NOT NULL,
   `book_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `borrow_book`
+--
+
+INSERT INTO `borrow_book` (`borrow_id`, `book_id`) VALUES
+(18, 5);
 
 -- --------------------------------------------------------
 
@@ -100,19 +131,6 @@ INSERT INTO `genre` (`genre_id`, `genre_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `libary_card`
---
-
-CREATE TABLE `libary_card` (
-  `card_id` varchar(10) NOT NULL,
-  `full_name` varchar(50) NOT NULL,
-  `address` varchar(50) NOT NULL,
-  `phone_number` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `librarian`
 --
 
@@ -132,6 +150,27 @@ CREATE TABLE `librarian` (
 INSERT INTO `librarian` (`librarian_id`, `librarian_name`, `address`, `phone_number`, `username`, `password`) VALUES
 ('THUTHU1', 'Ngô Tiến Phong', '44 Nguyễn Huệ', '0123456789', 'phong5141', '123456'),
 ('THUTHU2', 'Ngô Bảo Mật', '4/34 đường Bảo Mật', '0123456789', 'baomat', '123123');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `library_card`
+--
+
+CREATE TABLE `library_card` (
+  `card_id` varchar(10) NOT NULL,
+  `full_name` varchar(50) NOT NULL,
+  `address` varchar(50) NOT NULL,
+  `phone_number` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `library_card`
+--
+
+INSERT INTO `library_card` (`card_id`, `full_name`, `address`, `phone_number`) VALUES
+('20T1020501', 'Trần Thanh Long', 'Hà Nội', '0987654321'),
+('20T1020502', 'Ngô Tiến Phong', 'Huế', '0123456789');
 
 --
 -- Indexes for dumped tables
@@ -166,17 +205,17 @@ ALTER TABLE `genre`
   ADD PRIMARY KEY (`genre_id`);
 
 --
--- Indexes for table `libary_card`
---
-ALTER TABLE `libary_card`
-  ADD PRIMARY KEY (`card_id`);
-
---
 -- Indexes for table `librarian`
 --
 ALTER TABLE `librarian`
   ADD PRIMARY KEY (`librarian_id`),
   ADD UNIQUE KEY `unique_username` (`username`);
+
+--
+-- Indexes for table `library_card`
+--
+ALTER TABLE `library_card`
+  ADD PRIMARY KEY (`card_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -192,7 +231,7 @@ ALTER TABLE `book`
 -- AUTO_INCREMENT for table `borrows`
 --
 ALTER TABLE `borrows`
-  MODIFY `borrow_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `borrow_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
@@ -209,7 +248,7 @@ ALTER TABLE `book`
 --
 ALTER TABLE `borrows`
   ADD CONSTRAINT `fk_libarian` FOREIGN KEY (`librarian_id`) REFERENCES `librarian` (`librarian_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_libaryCard_borrows` FOREIGN KEY (`card_id`) REFERENCES `libary_card` (`card_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_libaryCard_borrows` FOREIGN KEY (`card_id`) REFERENCES `library_card` (`card_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `borrow_book`

@@ -3,7 +3,6 @@ import Librarian from "../models/librarianModel"
 const handleLogin = async (req, res) => {
     try {
         let { username, password } = req.body;
-        console.log(req.body)
         if (!username || !password) {
             return res.status(400).json({
                 message: 'Thiếu mật khẩu hoặc tài khoản'
@@ -17,7 +16,9 @@ const handleLogin = async (req, res) => {
         }
         const user = results[0];
         if (user.password === password) {
-            return res.status(200).json({
+            req.session.user = true;
+            return res.redirect('/');
+            res.status(200).json({
                 message: 'Đăng nhập thành công'
             })
         } else {
