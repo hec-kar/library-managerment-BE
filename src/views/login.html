@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
-    <link rel="stylesheet" href="/assets/css/login.css">
+    <link rel="stylesheet" href="../public/assets/css/login.css">
 </head>
 
 <body>
     <div class="container">
             <!-- Đăng nhập -->
-            <form action="/api/v1/login" method="POST" class="form" id="login-form">
-                <img src="assets/img/img1.jpg" class="img-library" alt="Anh thu vien">
+            <form action="/login" method="POST" class="form" id="login-form">
+                <img src="../public/assets/img/img1.jpg" class="img-library" alt="Anh thu vien">
                 <div class="wrap-form">
                     <div class="wrap-input">
                         <div class="form-group">
-                            <input id="account" name="username" rules="required" type="text" placeholder="Tên Tài Khoản"
+                            <input id="account" name="account" rules="required" type="text" placeholder="Tên Tài Khoản"
                                 class="form-control">
                         </div>
     
@@ -37,7 +37,7 @@
             <!--  -->
         
     </div>
-    <script src="/assets/js/login.js">
+    <script src="../public/assets/js/login.js">
     </script>
 </body>
 

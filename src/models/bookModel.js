@@ -1,4 +1,4 @@
-import pool from "../configs/connectDB";
+import pool from "../configs/connectDb";
 
 
 const Book = class {
