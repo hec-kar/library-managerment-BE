@@ -18,9 +18,9 @@ const handleLogin = async (req, res) => {
         if (user.password === password) {
             req.session.user = true;
             return res.redirect('/');
-            res.status(200).json({
-                message: 'Đăng nhập thành công'
-            })
+            // res.status(200).json({
+            //     message: 'Đăng nhập thành công'
+            // })
         } else {
             return res.status(401).json({
                 message: 'Sai mật khẩu'
