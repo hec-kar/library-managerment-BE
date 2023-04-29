@@ -108,7 +108,7 @@ let length
 
 btnLogOut.onsubmit = function (event) {
     event.preventDefault();
-    location.assign('./login.html')
+    location.assign('./login')
 }
 
 management.addEventListener('click', render)

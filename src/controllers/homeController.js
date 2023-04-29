@@ -5,6 +5,10 @@ const getLoginPage = (req, res) => {
 }
 
 const getHomePage = (req, res) => {
+    console.log(req.session.user)
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
     let indexUrl = __dirname.replace('\\controllers', '\\views')
     return res.sendFile(indexUrl + '/client-library.html');
 }

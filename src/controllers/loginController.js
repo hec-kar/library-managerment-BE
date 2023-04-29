@@ -34,7 +34,21 @@ const handleLogin = async (req, res) => {
     }
 }
 
+const handleLogout = async (req, res) => {
+    try {
+        req.session.destroy(function (err) {
+            // cannot access session here
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: 'Internal Server Error',
+            error: error.message
+        })
+    }
+}
+
 
 module.exports = {
-    handleLogin
+    handleLogin, handleLogout
 }

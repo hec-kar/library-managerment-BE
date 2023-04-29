@@ -5,7 +5,7 @@ const router = express.Router();
 
 const initLoginRouter = (app) => {
     router.post('/login', loginController.handleLogin);
-
+    router.post('/logout', loginController.handleLogout);
     return app.use('/api/v1', router);
 }
 
