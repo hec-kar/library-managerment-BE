@@ -6,9 +6,6 @@ const getLoginPage = (req, res) => {
 
 const getHomePage = (req, res) => {
     let indexUrl = __dirname.replace('\\controllers', '\\views')
-    if (!req.session.user) {
-        return res.redirect('/login');
-    }
     return res.sendFile(indexUrl + '/client-library.html');
 }
 

@@ -3,10 +3,11 @@ import Librarian from "../models/librarianModel"
 const handleLogin = async (req, res) => {
     try {
         let { username, password } = req.body;
+        // console.log(req.body);
         if (!username || !password) {
             return res.status(400).json({
                 message: 'Thiếu mật khẩu hoặc tài khoản'
-            });;
+            });
         }
         let results = await Librarian.findByUsername(username);
         if (results.length === 0) {
@@ -15,12 +16,10 @@ const handleLogin = async (req, res) => {
             });
         }
         const user = results[0];
+        console.log(user)
         if (user.password === password) {
             req.session.user = true;
             return res.redirect('/');
-            // res.status(200).json({
-            //     message: 'Đăng nhập thành công'
-            // })
         } else {
             return res.status(401).json({
                 message: 'Sai mật khẩu'
