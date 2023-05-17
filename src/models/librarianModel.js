@@ -15,7 +15,7 @@ const Librarian = class {
         return librarians;
     }
     static async findByUsername(username) {
-        const [accout] = await pool.execute('SELECT `username`, `password` FROM `librarian` WHERE username = ? ', [username]);
+        const [accout] = await pool.execute('SELECT `username`, `password`, librarian_id ,librarian_name FROM `librarian` WHERE username = ? ', [username]);
         return accout;
     }
 

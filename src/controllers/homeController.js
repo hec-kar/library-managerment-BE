@@ -5,8 +5,7 @@ const getLoginPage = (req, res) => {
 }
 
 const getHomePage = (req, res) => {
-    console.log(req.session.user)
-    if (!req.session.user) {
+    if (!req.session.librarian_id) {
         return res.redirect('/login');
     }
     let indexUrl = __dirname.replace('\\controllers', '\\views')

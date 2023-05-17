@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2023 at 11:25 AM
+-- Generation Time: May 17, 2023 at 12:05 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.0.25
 
@@ -50,16 +50,19 @@ CREATE TABLE `book` (
   `author` varchar(50) NOT NULL,
   `publication` varchar(50) NOT NULL,
   `quantity` int(11) NOT NULL DEFAULT 0
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `book`
 --
 
 INSERT INTO `book` (`book_id`, `book_name`, `genre_id`, `author`, `publication`, `quantity`) VALUES
-(4, ' Nhập môn lập trình ngôn ngữ C', 'CNTT', 'Nguyễn Thanh Thủy', 'Nxb. Khoa học và Kỹ thuật', 12),
-(5, 'Cấu trúc dữ liệu và giải thuật', 'CNTT', 'Đỗ Xuân Lôi', 'Nxb. Đại học Quốc gia', 0),
-(8, 'Lập trình hướng đối tượng', 'CNTT', 'Trương Công Tuấn', 'Nxb. Đại học Huế, 2019', 2);
+(1, 'Giáo trình Lịch sử tôn giáo thế giới', 'LS', 'Đặng Văn Chương', 'Nxb. Đại học Huế, 2020', 10),
+(2, 'Từ ngữ chỉ màu sắc trong tiếng Pa Cô', 'NV', 'Trương Thị Cúc', 'Nxb. Trường Đại học Khoa học, 2022', 3),
+(3, 'Giáo trình Lập trình nâng cao với C/C++', 'CNTT', 'Trương Công Tuấn', 'Nxb. Đại học Huế, 2021', 15),
+(4, 'Giáo trình lập trình hướng đối tượng', 'CNTT', 'Trương Công Tuấn', 'Nxb. Trường Đại học Khoa học, 2018', 4),
+(5, 'Cấu trúc dữ liệu và giải thuật', 'CNTT', 'Đỗ Xuân Lôi', 'Nxb. Giáo dục, 1993', 20),
+(6, 'Cơ sở công nghệ phần mềm', 'CNTT', 'Lương Mạnh Bá', 'Nxb. Khoa học và Kỹ thuật, 2010', 1);
 
 -- --------------------------------------------------------
 
@@ -82,7 +85,7 @@ CREATE TABLE `borrows` (
 --
 
 INSERT INTO `borrows` (`borrow_id`, `card_id`, `librarian_id`, `take_date`, `due_date`, `return_date`, `status`) VALUES
-(18, '20T1020501', 'THUTHU2', '2023-04-22', '2023-05-06', NULL, 0);
+(38, '20T1020501', 'THUTHU1', '2023-05-17', '2023-05-31', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -94,13 +97,6 @@ CREATE TABLE `borrow_book` (
   `borrow_id` int(11) NOT NULL,
   `book_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `borrow_book`
---
-
-INSERT INTO `borrow_book` (`borrow_id`, `book_id`) VALUES
-(18, 5);
 
 -- --------------------------------------------------------
 
@@ -172,6 +168,52 @@ INSERT INTO `library_card` (`card_id`, `full_name`, `address`, `phone_number`) V
 ('20T1020501', 'Trần Thanh Long', 'Hà Nội', '0987654321'),
 ('20T1020502', 'Ngô Tiến Phong', 'Huế', '0123456789');
 
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `vw_borrowsstatistics`
+-- (See below for the actual view)
+--
+CREATE TABLE `vw_borrowsstatistics` (
+`borrow_id` int(11)
+,`card_id` varchar(10)
+,`take_date` date
+,`return_date` date
+,`book_name` varchar(50)
+,`genre_id` varchar(50)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `vw_select_bookandgenre`
+-- (See below for the actual view)
+--
+CREATE TABLE `vw_select_bookandgenre` (
+`book_id` int(11)
+,`book_name` varchar(50)
+,`genre_id` varchar(10)
+,`genre_name` varchar(50)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `vw_borrowsstatistics`
+--
+DROP TABLE IF EXISTS `vw_borrowsstatistics`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_borrowsstatistics`  AS SELECT `borrows`.`borrow_id` AS `borrow_id`, `borrows`.`card_id` AS `card_id`, `borrows`.`take_date` AS `take_date`, `borrows`.`return_date` AS `return_date`, `book`.`book_name` AS `book_name`, `book`.`genre_id` AS `genre_id` FROM ((`borrows` join `borrow_book` on(`borrows`.`borrow_id` = `borrow_book`.`borrow_id`)) join `book` on(`book`.`book_id` = `borrow_book`.`book_id`))  ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `vw_select_bookandgenre`
+--
+DROP TABLE IF EXISTS `vw_select_bookandgenre`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vw_select_bookandgenre`  AS SELECT `book`.`book_id` AS `book_id`, `book`.`book_name` AS `book_name`, `genre`.`genre_id` AS `genre_id`, `genre`.`genre_name` AS `genre_name` FROM (`genre` join `book` on(`genre`.`genre_id` = `book`.`genre_id`))  ;
+
 --
 -- Indexes for dumped tables
 --
@@ -225,13 +267,13 @@ ALTER TABLE `library_card`
 -- AUTO_INCREMENT for table `book`
 --
 ALTER TABLE `book`
-  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `borrows`
 --
 ALTER TABLE `borrows`
-  MODIFY `borrow_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `borrow_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- Constraints for dumped tables

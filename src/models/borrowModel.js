@@ -20,9 +20,7 @@ const Borrow = class {
         let [result] = await pool.execute(`INSERT INTO borrows (borrow_id, card_id, librarian_id, take_date, due_date, return_date, status) 
                                             VALUES (NULL, ?, ?, CURRENT_DATE(), (CURRENT_DATE() + INTERVAL 14 DAY), NULL, '0')`,
             [cardId, librarianId])
-        return {
-            borrowId: result.insertId
-        };
+        return result.insertId;
     }
 
     static async addBorrowDetail(borrowId, book_id) {

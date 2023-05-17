@@ -16,9 +16,8 @@ const handleLogin = async (req, res) => {
             });
         }
         const user = results[0];
-        console.log(user)
         if (user.password === password) {
-            req.session.user = true;
+            req.session.librarian_id = user.librarian_id;
             return res.redirect('/');
         } else {
             return res.status(401).json({
