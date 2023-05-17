@@ -6,6 +6,7 @@ import initBookRouter from './routers/bookRouter';
 import initGenreRouter from './routers/genreRouter';
 import initLibrarianRouter from './routers/librarianRouter';
 import initLoginRouter from "./routers/loginRouter";
+import initBorrowRouter from "./routers/borrowRouter";
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -27,7 +28,7 @@ initWebRouter(app);
 initBookRouter(app);
 initGenreRouter(app);
 initLibrarianRouter(app);
-
+initBorrowRouter(app);
 
 
 

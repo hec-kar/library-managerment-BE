@@ -1,0 +1,40 @@
+#GET BOOK LIST
+GET http://localhost:8080/api/v1/book/list
+
+###
+
+POST http://localhost:8080/api/v1/book/add 
+
+
+###LOGIN REQUEST
+POST http://localhost:8080/api/v1/login
+Content-Type: application/json
+
+{
+    "username": "baomat",
+    "password": "123123"
+}
+
+### ADD BORROW
+POST  http://localhost:8080/api/v1/create-new-borrow
+Content-Type: application/json
+
+{
+    "cardId": "20T1020501",
+    "librarianId": "THUTHU1"
+}
+
+
+### ADD BORROW DETAIL
+POST  http://localhost:8080/api/v1/add-borrow-detail
+Content-Type: application/json
+
+{
+    "borrowId": 29,
+    "book_id": 5
+}
+
+
+### GET Borrow Statistics
+
+GET http://localhost:8080/api/v1/get-borrow-statistics
