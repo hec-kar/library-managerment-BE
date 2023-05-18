@@ -84,14 +84,6 @@ const updateBook = async (req, res) => {
     }
 }
 
-const getBookGenreDetail = async (req, res) => {
-    let data = await Book.getBookGenreDetail();
-    return res.status(200).json({
-        message: 'Lấy thông tin thành công!',
-        data: data
-    })
-}
-
 module.exports = {
-    getBookList, createNewBook, deleteBook, updateBook, getBookGenreDetail
+    getBookList, createNewBook, deleteBook, updateBook
 }

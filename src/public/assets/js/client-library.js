@@ -487,8 +487,10 @@ function handleBorrowBook(bookId, id) {
     `
     borrowBookName.innerHTML = bookNameHtmls
     //Xử lí sửa số lượng
+    
     const idBorrowBook = document.querySelector('.student-id')
     const nameBorrowBook = document.querySelector('.student-name')
+    const quantityBorrowBook = document.querySelector('.quantity-borrow-book')
     const quantityBorrowDay = document.querySelector('.quantity-borrow-day')
     const submitBorrowBook = document.querySelector('.submit-borrow-book')
     let quantityBook = document.querySelector(`.list-quantity-book-${bookId}`)
@@ -533,13 +535,11 @@ function handleBorrowBook(bookId, id) {
             .then(function(data) {
                 quantityBook.innerHTML = `<p>${data.quantity}</p>`
                 elementBorrowBook.classList.add('hidden')
-                quantityBorrowBook = ''
-                quantityBorrowDay = ''
+                quantityBorrowBook.value = ''
+                quantityBorrowDay.value = ''
                 alert('Mượn sách thành công!')
             })
-            .catch((err) => {
-                alert(err)
-            })
+            
         } 
     }
 }

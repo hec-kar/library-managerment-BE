@@ -39,11 +39,6 @@ const Book = class {
             [name, genreId, author, publication, quantity, id]);
         return new Book(id, name, genreId, author, publication, quantity);
     }
-
-    static async getBookGenreDetail() {
-        let [data] = await pool.execute('SELECT * FROM vw_select_bookandgenre');
-        return data;
-    }
 }
 
 
