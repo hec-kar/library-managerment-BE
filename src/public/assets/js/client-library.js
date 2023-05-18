@@ -135,10 +135,10 @@ const listBookBorrowHtmls = `<div class="list-book">
 </div>
 `
 
-let listItems = []
-const listTitleBook = []
-const listAuthorBook = []
-const listGenreBook = []
+let listItems
+let listTitleBook
+let listAuthorBook
+let listGenreBook
 let listID = []
 let length
 
@@ -169,6 +169,7 @@ async function getDataFromBublicAPI() {
     const datas = await responseAPI.json();
     const listDataBook = document.querySelector('.content-list-book');
     const btnBorrowBook = document.querySelector('#borrow-book')
+    listItems = []
     datas.forEach((data) => {
         const bookId = data.book_id
         const bookIdItem = document.createElement('div');
@@ -244,30 +245,34 @@ async function getDataFromBublicAPI() {
         });
     }
     //search tittle
+    listTitleBook = [];
     const searchTitle = document.querySelector('.search-title')
-    searchTitle.onclick = function() {
-        listID.forEach((id) => {
-            const titleBook = document.querySelector(`.list-title-book-${id}`)
-            listTitleBook.push(titleBook)
-        })
+    listID.forEach((id) => {
+        const titleBook = document.querySelector(`.list-title-book-${id}`)
+        listTitleBook.push(titleBook)
+    })
+    searchTitle.oninput = function() {
         searchTitle.addEventListener('input', (e) => filerInput(e.target.value, listTitleBook))
     }
     //search author
+    listAuthorBook = [];
     const searchAuthor = document.querySelector('.search-author')
-    searchAuthor.onclick = function() {
-        listID.forEach((id) => {
-            const authorBook = document.querySelector(`.list-author-book-${id}`)
-            listAuthorBook.push(authorBook)
-        })
+    listID.forEach((id) => {
+        const authorBook = document.querySelector(`.list-author-book-${id}`)
+        listAuthorBook.push(authorBook)
+    })
+    searchAuthor.oninput = function() {
         searchAuthor.addEventListener('input', (e) => filerInput(e.target.value, listAuthorBook))  
     }
     //search genre
+    listGenreBook = [];
+
     const searchGenre = document.querySelector('.search-genre')
-    searchGenre.onclick = function() {
-        listID.forEach((id) => {
-            const genreBook = document.querySelector(`.list-genre-book-${id}`)
-            listGenreBook.push(genreBook)
-        })
+    listID.forEach((id) => {
+        const genreBook = document.querySelector(`.list-genre-book-${id}`)
+        listGenreBook.push(genreBook)
+    })
+    searchGenre.oninput = function() {
         searchGenre.addEventListener('input', (e) => filerInput(e.target.value, listGenreBook))
     }
     //add book
